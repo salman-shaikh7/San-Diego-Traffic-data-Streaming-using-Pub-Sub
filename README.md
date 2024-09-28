@@ -13,36 +13,42 @@ In this Project, we will be using San Diego traffic sensor data into a Pub/Sub t
 *   Create a Pub/Sub topic and subscription.
 *   Simulate your traffic sensor data into Pub/Sub.
 
-## PART 1 : You will be running a sensor simulator from the training VM. 
+## PART 1 : Create Pub/Sub topic and subscription.
 
-There are several files and some setup of the environment required.
-
+### STEP 1 : Export project ID
 
 ```bash
 export DEVSHELL_PROJECT_ID=$(gcloud config get-value project)
 ```
-
-Task 2. Create Pub/Sub topic and subscription
+### STEP 2 : Create Pub/Sub topic.
 
 ```bash
 gcloud pubsub topics create sandiego
 ```
+### STEP 3 : Publish a simple message
 
 ```bash
 gcloud pubsub topics publish sandiego --message "hello"
 ```
+
+### STEP 4 : Create a subscription for the topic.
+
 ```bash
 gcloud pubsub subscriptions create --topic sandiego mySub1
 ```
+
+### STEP 5 : Pull the first message that was published to the topic:
+
 ```bash
 gcloud pubsub subscriptions pull --auto-ack mySub1
 ```
+### STEP 6 : Delete subscription for the topic.
 
 ```bash
 gcloud pubsub subscriptions delete mySub1
 ```
 
-## Task 3. Simulate traffic sensor data into Pub/Sub 
+## PART 2 : Simulate traffic sensor data into Pub/Sub 
 
 *   We don't have any real time data streaming for this project instead we will create simulated streaming using Python code.
 *   We will use GCP training dataset by google cloud. 
@@ -64,19 +70,14 @@ gsutil cp gs://cloud-training-demos/sandiego/sensor_obs2008.csv.gz .
 ```
 
 
-### STEP 2 : download the dataset 
-
-
+### STEP 2 : Run the script File 
 
 ```bash
 ./send_sensor_data.py --speedFactor=60 --project $DEVSHELL_PROJECT_ID
 ```
 
+### STEP 3 : Run the script File 
 
-
-
-Task 4. Verify that messages are received
-<br>
 
 
 cd ~/training-data-analyst/courses/streaming/publish
